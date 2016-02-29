@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+     本app的主要色调
+     用的是:android:background="@android:color/holo_blue_dark"
+     -->
+    <color name="app_main_color" >#ff0099cc</color>
+</resources>

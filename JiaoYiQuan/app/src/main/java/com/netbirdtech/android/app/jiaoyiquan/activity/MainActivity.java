@@ -79,6 +79,8 @@ public class MainActivity extends BaseActivity {
                 switch (position){
                     case 0:
                         //登录注册页面
+                        Intent it = new Intent(MainActivity.this,LoginActivity.class) ;
+                        startActivity(it);
                         break;
                     case 1:
                         break;

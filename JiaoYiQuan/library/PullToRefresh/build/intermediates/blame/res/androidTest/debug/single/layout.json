@@ -6,13 +6,5 @@
     {
         "merged": "D:\\Android\\AndroidWorkSpace\\NetBirdProject\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header_horizontal.xml",
         "source": "D:\\Android\\AndroidWorkSpace\\NetBirdProject\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_horizontal.xml"
-    },
-    {
-        "merged": "D:\\Android\\AndroidWorkSpace\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header_horizontal.xml",
-        "source": "D:\\Android\\AndroidWorkSpace\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_horizontal.xml"
-    },
-    {
-        "merged": "D:\\Android\\AndroidWorkSpace\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header_vertical.xml",
-        "source": "D:\\Android\\AndroidWorkSpace\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_vertical.xml"
     }
 ]
