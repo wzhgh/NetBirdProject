@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/sidebar_exit.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/sidebar_loginuser.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/sidebar_realuser.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/library/PullToRefresh" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/login_pw_icon.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/login_user_icon.png" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

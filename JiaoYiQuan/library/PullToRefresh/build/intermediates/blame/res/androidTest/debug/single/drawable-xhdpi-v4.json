@@ -1,5 +1,13 @@
 [
     {
+        "merged": "D:\\Android\\AndroidWorkSpace\\NetBirdProject\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_flip.png",
+        "source": "D:\\Android\\AndroidWorkSpace\\NetBirdProject\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_flip.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidWorkSpace\\NetBirdProject\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\indicator_arrow.png",
+        "source": "D:\\Android\\AndroidWorkSpace\\NetBirdProject\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\indicator_arrow.png"
+    },
+    {
         "merged": "D:\\Android\\AndroidWorkSpace\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_flip.png",
         "source": "D:\\Android\\AndroidWorkSpace\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_flip.png"
     },
@@ -10,5 +18,9 @@
     {
         "merged": "D:\\Android\\AndroidWorkSpace\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\indicator_arrow.png",
         "source": "D:\\Android\\AndroidWorkSpace\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\indicator_arrow.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidWorkSpace\\NetBirdProject\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_rotate.png",
+        "source": "D:\\Android\\AndroidWorkSpace\\NetBirdProject\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_rotate.png"
     }
 ]

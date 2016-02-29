@@ -4,7 +4,15 @@
         "source": "D:\\Android\\AndroidWorkSpace\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable\\indicator_bg_bottom.xml"
     },
     {
+        "merged": "D:\\Android\\AndroidWorkSpace\\NetBirdProject\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\indicator_bg_bottom.xml",
+        "source": "D:\\Android\\AndroidWorkSpace\\NetBirdProject\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable\\indicator_bg_bottom.xml"
+    },
+    {
         "merged": "D:\\Android\\AndroidWorkSpace\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\indicator_bg_top.xml",
         "source": "D:\\Android\\AndroidWorkSpace\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable\\indicator_bg_top.xml"
+    },
+    {
+        "merged": "D:\\Android\\AndroidWorkSpace\\NetBirdProject\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\indicator_bg_top.xml",
+        "source": "D:\\Android\\AndroidWorkSpace\\NetBirdProject\\JiaoYiQuan\\library\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable\\indicator_bg_top.xml"
     }
 ]

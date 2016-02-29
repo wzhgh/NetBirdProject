@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/imageView"
             android:scaleType="fitStart"
-            android:src="@drawable/login_icon_side"/>
+            android:src="@drawable/logo_icon_side"/>
     </LinearLayout>
 
     <LinearLayout
