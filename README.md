@@ -1,2 +1,2 @@
 # NetBirdProject
-网鸟公司相关项目
+网鸟科技公司项目
