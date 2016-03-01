@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/library/PullToRefresh/PullToRefresh.iml" filepath="$PROJECT_DIR$/library/PullToRefresh/PullToRefresh.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/volley-1.0.19/volley-1.0.19.iml" filepath="$PROJECT_DIR$/library/volley-1.0.19/volley-1.0.19.iml" />
     </modules>
   </component>
 </project>

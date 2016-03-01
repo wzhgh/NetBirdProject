@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.joanzapata.android.BaseAdapterHelper;
 import com.joanzapata.android.QuickAdapter;
 import com.netbirdtech.android.app.jiaoyiquan.R;
@@ -17,12 +20,23 @@ import com.netbirdtech.android.app.jiaoyiquan.utils.ItemDataUtils;
 import com.netbirdtech.android.app.jiaoyiquan.widget.DragLayout;
 import com.nineoldandroids.view.ViewHelper;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import me.iwf.photopicker.utils.PhotoPickerIntent;
+
 public class MainActivity extends BaseActivity {
     private DragLayout dragLayout;
     private ListView leftLV;
     private ImageView topLeftIV, topEditIV;
     private QuickAdapter<ItemBean> quickAdapter;
     private SideLVAdapter sideAdapter ;
+
+    /**
+     * 测试使用butterknife库
+     */
+    @Bind(R.id.top_edit_iv_id)
+    EditText uu ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +44,11 @@ public class MainActivity extends BaseActivity {
         setStatusBar();
         initDragLayout() ;
         initView() ;
+
+        //测试使用Volley库
+        RequestQueue rq = Volley.newRequestQueue(this) ;
+        //测试使用PhotoPicker库
+        PhotoPickerIntent intent = new PhotoPickerIntent(MainActivity.this);
     }
 
     private void initDragLayout() {
@@ -97,10 +116,16 @@ public class MainActivity extends BaseActivity {
         topEditIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(MainActivity.this,EditActivity.class) ;
+                Intent it = new Intent(MainActivity.this, EditActivity.class);
                 startActivity(it);
             }
         });
+    }
+
+    private void test(){
+
+        //Error:Execution failed for task ':app:transformClassesWithDexForDebug'.
+         //       > com.android.build.api.transform.TransformException: com.android.ide.common.process.ProcessException: org.gradle.process.internal.ExecException: Process 'command 'D:\Program Files\Java\jdk1.8.0_65\bin\java.exe'' finished with non-zero exit value 2
     }
 
 }

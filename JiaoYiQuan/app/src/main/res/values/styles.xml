@@ -9,4 +9,6 @@
     <style name="BaseAppTheme2" parent="android:Theme.Light">
     </style>
 
+    <style name="BaseAppTheme3" parent="Theme.AppCompat.Light.NoActionBar" />
+
 </resources>

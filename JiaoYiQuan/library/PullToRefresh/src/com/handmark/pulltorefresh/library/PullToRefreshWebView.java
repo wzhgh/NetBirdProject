@@ -112,7 +112,8 @@ public class PullToRefreshWebView extends PullToRefreshBase<WebView> {
 
 	@Override
 	protected boolean isReadyForPullEnd() {
-		float exactContentHeight = FloatMath.floor(mRefreshableView.getContentHeight() * mRefreshableView.getScale());
+		//Android6.0使用 Math.floor 代替 FloatMath.floor 即可； 在6.0中FloorMath.floor()过时了
+		double exactContentHeight = Math.floor(mRefreshableView.getContentHeight() * mRefreshableView.getScale());
 		return mRefreshableView.getScrollY() >= (exactContentHeight - mRefreshableView.getHeight());
 	}
 
@@ -158,8 +159,9 @@ public class PullToRefreshWebView extends PullToRefreshBase<WebView> {
 		}
 
 		private int getScrollRange() {
-			return (int) Math.max(0, FloatMath.floor(mRefreshableView.getContentHeight() * mRefreshableView.getScale())
+			return (int) Math.max(0, Math.floor(mRefreshableView.getContentHeight() * mRefreshableView.getScale())
 					- (getHeight() - getPaddingBottom() - getPaddingTop()));
+
 		}
 	}
 }
