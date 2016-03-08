@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/JiaoYiQuan.iml" filepath="$PROJECT_DIR$/JiaoYiQuan.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/PullToRefresh/PullToRefresh.iml" filepath="$PROJECT_DIR$/library/PullToRefresh/PullToRefresh.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/volley-1.0.19/volley-1.0.19.iml" filepath="$PROJECT_DIR$/library/volley-1.0.19/volley-1.0.19.iml" />
+    </modules>
+  </component>
+</project>
