@@ -8,26 +8,18 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.joanzapata.android.BaseAdapterHelper;
 import com.joanzapata.android.QuickAdapter;
 import com.netbirdtech.android.app.jiaoyiquan.R;
 import com.netbirdtech.android.app.jiaoyiquan.adapter.SideLVAdapter;
 import com.netbirdtech.android.app.jiaoyiquan.entity.ItemBean;
-import com.netbirdtech.android.app.jiaoyiquan.utils.DisplayUtil;
 import com.netbirdtech.android.app.jiaoyiquan.utils.ItemDataUtils;
 import com.netbirdtech.android.app.jiaoyiquan.widget.DragLayout;
 import com.nineoldandroids.view.ViewHelper;
@@ -35,10 +27,6 @@ import com.rey.material.app.Dialog;
 import com.rey.material.app.DialogFragment;
 import com.rey.material.app.SimpleDialog;
 import com.rey.material.app.ThemeManager;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import me.iwf.photopicker.utils.PhotoPickerIntent;
 
 public class MainActivity extends BaseActivity{
     private Context mContext ;
@@ -53,11 +41,6 @@ public class MainActivity extends BaseActivity{
     private Boolean loginFlag = false ;
 
     private FragmentManager mSupportFragmentMgr ;
-    /**
-     * 测试使用butterknife库
-     @Bind(R.id.top_edit_iv_id)
-     EditText uu ;
-     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +51,6 @@ public class MainActivity extends BaseActivity{
         initView() ;
         initDragLayout() ;
         loadData();
-        //测试使用PhotoPicker库
-        PhotoPickerIntent intent = new PhotoPickerIntent(MainActivity.this);
     }
 
     private void initDragLayout() {
@@ -153,7 +134,6 @@ public class MainActivity extends BaseActivity{
                             ((SimpleDialog.Builder)builder).message("        确定要退出吗 ？        ")
                                     .positiveAction("确定")
                                     .negativeAction("取消");
-                            //显示出来
                             DialogFragment fragment = DialogFragment.newInstance(builder);
                             fragment.show(mSupportFragmentMgr, null);
                         }
@@ -171,7 +151,6 @@ public class MainActivity extends BaseActivity{
     private void loadData(){
         SharedPreferences spf = mContext.getSharedPreferences("UserInfoPre", mContext.MODE_PRIVATE) ;
         loginUserName = spf.getString("username","") ;
-
         if(loginUserName != ""){
             loginFlag = true ;
             //更新数据

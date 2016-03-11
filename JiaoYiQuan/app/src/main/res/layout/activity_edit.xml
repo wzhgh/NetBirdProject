@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:inputType="textMultiLine"
-            android:id="@+id/editText"
+            android:id="@+id/edit_content_id"
             android:gravity="top|left"
             android:background="#eeeded"
             android:textSize="14sp"
@@ -63,14 +63,16 @@
             android:autoText="false" />
 
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/addimage_id"
-        android:src="@mipmap/addimage_icon"
-        android:scaleType="fitCenter"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp" />
-
+        android:layout_marginRight="10dp">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recycler_view" />
+    </LinearLayout>
 </LinearLayout>

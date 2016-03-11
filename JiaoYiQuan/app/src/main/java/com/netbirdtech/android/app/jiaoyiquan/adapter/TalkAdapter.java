@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.disklrucache.DiskLruCache;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.netbirdtech.android.app.jiaoyiquan.R;
+import com.netbirdtech.android.app.jiaoyiquan.activity.PhotoPreviewActivity;
 import com.netbirdtech.android.app.jiaoyiquan.entity.Talk;
 import com.netbirdtech.android.app.jiaoyiquan.utils.VolleySington;
 
@@ -112,43 +113,36 @@ public class TalkAdapter extends BaseAdapter{
                 itemImageview.setVisibility(ImageView.GONE);
             }
         }
-        /*
-        使用Volley的ImageRequest来加载图片
-        //为图片添加点击事件
-        ImageClickListener listener = new ImageClickListener(imageUrlList);
-        for(int i = 0 ; i < imageUrlList.size() ; i++){
-            final ImageView  itemImageview = holder.ivArr.get(i) ;
-            String imageUrl = imageUrlList.get(i) ;
-            //为iamgeview设置tag，方式异步请求时图片错位
-//            itemImageview.setTag(imageUrl);
-            //异步请求图片
-            ImageRequest request = new ImageRequest(imageUrl,
-                    new Response.Listener<Bitmap>() {
-                        @Override
-                        public void onResponse(Bitmap bitmap) {
-                            //320 * 480 = 2 : 3
-                            itemImageview.setImageBitmap(bitmap);
-                        }
-                    }, 0, 0, null,
-                    new Response.ErrorListener() {
-                        public void onErrorResponse(VolleyError error) {
-                        }
-                    });
-            VolleySington.getInstance(mContext).addToRequestQueue(request);
 
-            itemImageview.setOnClickListener(listener);
-        }
-        */
+//        ImageClickListener listener = new ImageClickListener(imageUrlList);
+//        for(int i = 0 ; i < imageUrlList.size() ; i++){
+//            final ImageView  itemImageview = holder.ivArr.get(i) ;
+//            String imageUrl = imageUrlList.get(i) ;
+//            //使用Volley的ImageRequest来加载图片
+//            ImageRequest request = new ImageRequest(imageUrl,
+//                    new Response.Listener<Bitmap>() {
+//                        @Override
+//                        public void onResponse(Bitmap bitmap) {
+//                            //320 * 480 = 2 : 3
+//                            itemImageview.setImageBitmap(bitmap);
+//                        }
+//                    }, 0, 0, null,
+//                    new Response.ErrorListener() {
+//                        public void onErrorResponse(VolleyError error) {
+//                        }
+//                    });
+//            VolleySington.getInstance(mContext).addToRequestQueue(request);
+//            //为图片添加点击事件
+//            itemImageview.setOnClickListener(listener);
+//        }
 
-        //使用bumptech/glide 来加载图片
-        ImageClickListener listener = new ImageClickListener(imageUrlList);
         for(int i = 0 ; i < imageUrlList.size() ; i++){
             String imageUrl = imageUrlList.get(i) ;
             ImageView  itemImageview = holder.ivArr.get(i) ;
-            //加载图片
+            //使用bumptech/glide 来加载图片
             Glide.with(mActivity).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.ALL).centerCrop().crossFade().into(itemImageview) ;
             //ImageView预览
-            itemImageview.setOnClickListener(listener);
+            itemImageview.setOnClickListener(new ImageClickListener(mActivity,imageUrlList)) ;
         }
         return convertView;
     }
@@ -163,11 +157,12 @@ public class TalkAdapter extends BaseAdapter{
     }
 
     class ImageClickListener implements View.OnClickListener{
+        private Activity activity ;
         private ArrayList<String> mPhotoPaths ;
         private int currentItem = 0 ;
-        private final static int REQUEST_CODE = 12 ;
 
-        public ImageClickListener(ArrayList<String> photoPaths) {
+        public ImageClickListener(Activity activity,ArrayList<String> photoPaths) {
+            this.activity =  activity;
             mPhotoPaths = photoPaths ;
         }
 
@@ -199,29 +194,9 @@ public class TalkAdapter extends BaseAdapter{
             if(mPhotoPaths == null || mPhotoPaths.size() == 0 || currentItem < 0 || currentItem >= mPhotoPaths.size()){
                 return ;
             }
-            //ArrayList<String> photoPaths  //photoPaths支持http的图片
-            Intent intent = new Intent(mContext, PhotoPagerActivity.class);
-            intent.putExtra(PhotoPagerActivity.EXTRA_CURRENT_ITEM, currentItem);
-            intent.putExtra(PhotoPagerActivity.EXTRA_PHOTOS, mPhotoPaths);
-            intent.putExtra(PhotoPagerActivity.EXTRA_SHOW_DELETE, false);
-            mActivity.startActivityForResult(intent, REQUEST_CODE);
+            Intent intent = new Intent(activity, PhotoPreviewActivity.class);
+            intent.putExtra(PhotoPreviewActivity.EXTRA_PHOTOS,mPhotoPaths);
+            activity.startActivity(intent);
         }
     }
-
-
-    /*
-    public ImageView createImageView(Context context){
-        ImageView iv = new ImageView(context) ;
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(250,400) ;
-        lp.setMargins(10,0,0,0);
-        iv.setLayoutParams(lp);
-        //设置外边距
-//        ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams)iv.getLayoutParams() ;
-//        mlp.leftMargin = 10 ;
-//        iv.setLayoutParams(mlp);
-        iv.setScaleType(ImageView.ScaleType.FIT_XY) ;
-        return iv ;
-    }
-    */
-
 }
