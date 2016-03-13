@@ -124,7 +124,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(LoginActivity.this,"密码不能为空！",Toast.LENGTH_SHORT).show();
                     return ;
                 }
-                loginByJsonObjectRequest(loginUserName,loginPwdVal);
+                loginRequestByJsonObject(loginUserName, loginPwdVal);
                 break ;
             case R.id.user_register_id:
                 //Button的点击效果
@@ -144,7 +144,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(LoginActivity.this,"2次密码必须相同",Toast.LENGTH_SHORT).show();
                     return ;
                 }
-                registerByJsonObjectRequest(regUserName,regPwd,regPwd2);
+                registerRequestByJsonObject(regUserName, regPwd, regPwd2);
                 break  ;
             default:
                 break;
@@ -196,7 +196,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      * POST方式
      * 使用Volley的JsonObjectRequest
      */
-    private void loginByJsonObjectRequest(String loginUserName,String loginPwdVal){
+    private void loginRequestByJsonObject(String loginUserName,String loginPwdVal){
         final Dialog loadingDialog = ViewUtils.createLoadingDialog(LoginActivity.this, "正在登录......", true) ;
         loadingDialog.show();
         String loginUrl = "http://192.168.1.253/user/login.do" ;
@@ -287,7 +287,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      * POST方式
      * 使用Volley的JsonObjectRequest
      */
-    private void registerByJsonObjectRequest(String regUserName,String regPwd,String regPwdConfirm){
+    private void registerRequestByJsonObject(String regUserName,String regPwd,String regPwdConfirm){
         final Dialog loadingDialog = ViewUtils.createLoadingDialog(LoginActivity.this, "正在请求......", true) ;
         loadingDialog.show();
         String loginUrl = "http://192.168.1.253/user/register.do" ;

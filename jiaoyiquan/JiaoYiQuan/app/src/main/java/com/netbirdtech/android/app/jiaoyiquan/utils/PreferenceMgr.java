@@ -3,34 +3,33 @@ package com.netbirdtech.android.app.jiaoyiquan.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.android.volley.toolbox.Volley;
+
 /**
  * Created by Administrator on 2016/3/11 0011.
  */
 public class PreferenceMgr {
 
-    private Context mContext ;
-    private SharedPreferences userInfoPre = null;
-    private static PreferenceMgr mInstance ;
+    private static Context mContext ;
+    private static SharedPreferences userInfoPre = null;
 
-    private  PreferenceMgr(Context context) {
-        mContext = context ;
-        init();
-    }
-
-    public static PreferenceMgr getInstance(Context context){
-        if(mInstance == null){
-            mInstance = new PreferenceMgr(context) ;
+    public static synchronized void initialize(Context context) {
+        if (mContext == null) {
+            synchronized (PreferenceMgr.class) {
+                mContext = context ;
+                init();
+            }
         }
-        return mInstance ;
     }
 
-    private void init(){
+    private static void init(){
         if(userInfoPre == null){
             userInfoPre = mContext.getSharedPreferences("UserInfoPre", mContext.MODE_PRIVATE) ;
         }
     }
 
-    public void addUserInfoToPre(int uid,String userName){
+    public static void addUserInfoToPre(int uid,String userName){
+        checkUserInfoPre();
         SharedPreferences.Editor spfEditor = userInfoPre.edit() ;
         spfEditor.clear() ;
         spfEditor.putInt("uid",uid) ;
@@ -42,7 +41,8 @@ public class PreferenceMgr {
     /**
      * 清空用户信息
      */
-    public void clearUserInfo(){
+    public static void clearUserInfo(){
+        checkUserInfoPre();
         SharedPreferences.Editor spfEditor = userInfoPre.edit() ;
         spfEditor.clear() ;
         spfEditor.putBoolean("loginFlag", false) ;
@@ -52,15 +52,24 @@ public class PreferenceMgr {
     /**
      * 判断用户是否登录
      */
-    public Boolean isLogin(){
+    public static Boolean isLogin(){
+        checkUserInfoPre();
        return  userInfoPre.getBoolean("loginFlag",false) ;
     }
 
-    public String getUserName(){
+    public static String getUserName(){
+        checkUserInfoPre();
         return userInfoPre.getString("username", "") ;
     }
 
-    public int getUid(){
-        return userInfoPre.getInt("uid",-1) ;
+    public static int getUid(){
+        checkUserInfoPre();
+        return userInfoPre.getInt("uid", -1) ;
+    }
+
+    private static void checkUserInfoPre(){
+        if(userInfoPre == null){
+            throw new RuntimeException("请先初始化PreferenceMgr,call initialize()");
+        }
     }
 }

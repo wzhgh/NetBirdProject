@@ -20,17 +20,15 @@ import java.util.UUID;
 
 
 /**
- * Created by gyzhong on 15/3/1.
+ * Created by wzh on 15/3/1.
+ * 多个文件同时上传
  */
 public class PostUploadRequest extends Request<String> {
     // 超时时间
     private static final int TIME_OUT = 10 * 1000;
     //设置编码
     private static final String CHARSET = "utf-8";
-
-    /**
-     * 正确数据的时候回掉用
-     */
+    //正确数据的时候回掉用
     private ResponseListener mListener ;
     //请求数据通过参数的形式传入
     private List<FormImage> mListItem ;
@@ -79,15 +77,13 @@ public class PostUploadRequest extends Request<String> {
         if (mListItem == null||mListItem.size() == 0){
             return super.getBody() ;
         }
-
         ByteArrayOutputStream bos = new ByteArrayOutputStream() ;
-
         int N = mListItem.size() ;
         FormImage formImage ;
         for (int i = 0; i < N ;i++){
             formImage = mListItem.get(i) ;
             StringBuffer sb= new StringBuffer() ;
-            /*第一行*/
+            //第一行
             sb.append("--"+BOUNDARY);
             sb.append("\r\n") ;
             /*第二行*/

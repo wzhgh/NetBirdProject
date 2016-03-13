@@ -13,5 +13,4 @@ public class NetUtils {
     public void getJsonDataByGet(){
 
     }
-
 }
