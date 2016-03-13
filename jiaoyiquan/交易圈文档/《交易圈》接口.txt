@@ -30,7 +30,7 @@
 喊单图片 
 接口 /upload/file
 参数  无
-方式 GET
+方式 Post
 
 全部数据
 接口  /message/latest
