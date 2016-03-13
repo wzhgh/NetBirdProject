@@ -2,3 +2,11 @@ _site/
 .sass-cache/
 .jekyll-metadata
 /rey5137_material
+/jiaoyiquan/JiaoYiQuan/.idea
+/jiaoyiquan/JiaoYiQuan/.gradle
+/jiaoyiquan/JiaoYiQuan/library/PullToRefresh/build
+/jiaoyiquan/JiaoYiQuan/library/PhotoPicker/build
+/jiaoyiquan/JiaoYiQuan/*.iml
+/jiaoyiquan/JiaoYiQuan/local.properties
+/jiaoyiquan/JiaoYiQuan/library/*.iml
+/jiaoyiquan/JiaoYiQuan/app/app.iml
