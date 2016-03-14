@@ -1,6 +1,7 @@
 package com.netbirdtech.android.app.jiaoyiquan.activity;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -18,8 +19,14 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.netbirdtech.android.app.jiaoyiquan.R;
 import com.netbirdtech.android.app.jiaoyiquan.adapter.PhotoRVAdapter;
 import com.netbirdtech.android.app.jiaoyiquan.entity.Constant;
@@ -27,6 +34,11 @@ import com.netbirdtech.android.app.jiaoyiquan.form.FormImage;
 import com.netbirdtech.android.app.jiaoyiquan.network.ResponseListener;
 import com.netbirdtech.android.app.jiaoyiquan.network.UploadApi;
 import com.netbirdtech.android.app.jiaoyiquan.utils.PreferenceMgr;
+import com.netbirdtech.android.app.jiaoyiquan.utils.ViewUtils;
+import com.netbirdtech.android.app.jiaoyiquan.utils.VolleyUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -35,7 +47,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 import me.iwf.photopicker.PhotoPickerActivity;
@@ -47,10 +61,11 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     private EditText contentET ;
 
     private ArrayList<String> selectedPhotos = new ArrayList<>();
+    private ArrayList<String> upLoadSucPhotos = new ArrayList<>() ;
     private PhotoRVAdapter photoAdapter ;
     private RecyclerView recyclerView;
-    //上传成功的图片(url地址)
-    private ArrayList<String> uploadSuccPhotos = new ArrayList<>() ;
+
+    private Dialog mDialog = null ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +87,8 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL));
         recyclerView.setAdapter(photoAdapter);
+
+        mDialog= ViewUtils.createLoadingDialog(EditActivity.this, "正在发表，请稍等......", true) ;
     }
 
     @Override
@@ -81,56 +98,137 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break ;
             case R.id.edit_commit_id:
-                publishComment() ;
+                mDialog.show();
+                //从第一张图片开始上传
+                uploadImage(0);
                 break ;
             default:
                 break ;
         }
     }
 
-    private void publishComment(){
-        uploadImage();
-        //用户id
-        int uid = PreferenceMgr.getUid() ;
-        //发表内容
-        String content = contentET.getText().toString() ;
+    /**
+     * 上传图片
+     * 使用递归，一张一张上传
+     */
+    private void uploadImage(int value){
+        if(selectedPhotos==null || selectedPhotos.size() == 0 || value < 0 || value > selectedPhotos.size()){
+            return ;
+        }
+        final int count = value ;
+        String imgPath = selectedPhotos.get(count) ;
+        FormImage imgObj = new FormImage(imgPath, Constant.UPLOAD_IMAGE_PARAM) ;
+        UploadApi.uploadSingleImage(imgObj, new ResponseListener<String>() {
+            int newCount = 0;
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                //上传出现问题，这里不做处理
+                newCount = count + 1;
+                if (newCount < selectedPhotos.size()) {
+                    //上传下一张图片
+                    uploadImage(newCount);
+                } else {
+                    //new Count == selectedPhotos.size() ：表示的图片都上传完了
+                    //然后提交发表请求
+                    publishContent();
+                }
+            }
 
+            @Override
+            public void onResponse(String response) {
+                //解析和保存数据
+                parseUploadImgResponse(response);
+                newCount = count + 1;
+                if (newCount < selectedPhotos.size()) {
+                    uploadImage(newCount);
+                } else {
+                    //new Count == selectedPhotos.size() ：表示的图片都上传完了
+                    //然后提交发表请求
+                    publishContent();
+                }
+            }
+        });
+    }
+
+    private void publishContent(){
+//        发表喊单
+//        接口  /message/post
+//        参数  uid(用户id)，content(喊单内容)，images(图片列表["http://a.com/upload/1.jpg","http:/a.com/upload/2.png"]) 键值对格式
+//        方式  POST
+//
+//       数据格式(注意value都没有双引号)： uid=15&content=aabbb&images=["http://a.com/upload/1.jpg","http:/a.com/upload/2.png"]
+        RequestQueue rq = VolleyUtil.getRequestQueue() ;
+        StringRequest request = new StringRequest(Request.Method.POST, Constant.PUBLISH_CONTENT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        mDialog.dismiss();
+                        //{"code":0,"errMsg":"success","data":[]}
+                        try {
+                            JSONObject jo = new JSONObject(response) ;
+                            int code = jo.getInt("code") ;
+                            if (code == 0 ){
+                                Toast.makeText(EditActivity.this, "发表成功!!", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }else {
+                                Toast.makeText(EditActivity.this,"发表失败，请重新发表！",Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(EditActivity.this,"发表失败，请重新发表！",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        mDialog.dismiss();
+                        Toast.makeText(EditActivity.this,"发表失败，请重新发表！"+ volleyError.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                int uid = PreferenceMgr.getUid() ;
+                String content = contentET.getText().toString() ;
+                StringBuilder imagesSB = new StringBuilder() ;
+                imagesSB.append("[") ;
+                for (int i = 0 ; i < upLoadSucPhotos.size() ; i++){
+                    imagesSB.append("\"" + upLoadSucPhotos.get(i) + "\"") ;
+                    if (i + 1 < upLoadSucPhotos.size()){
+                        imagesSB.append(",") ;
+                    }
+                }
+                imagesSB.append("]") ;
+                Map<String,String> map = new HashMap<>();
+                map.put("uid",uid+"");
+                map.put("content",content) ;
+                map.put("images", imagesSB.toString()) ;
+                return map;
+            }
+        } ;
+        rq.add(request) ;
     }
 
     /**
-     * 上传图片
+     * 图片上传成功后，解析返回的图片url地址
+     * @param response
      */
-    private void uploadImage(){
-        //使用计数锁CountDownLatch，只有当所有图片上传完成后，程序才能继续往下执行
-        final CountDownLatch cdl = new CountDownLatch(selectedPhotos.size()) ;
-        for(String imgPath : selectedPhotos){
-            FormImage imgObj = new FormImage(imgPath,Constant.UPLOAD_IMAGE_PARAM) ;
-            UploadApi.uploadSingleImage(imgObj, new ResponseListener<String>() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    //不管
-                    cdl.countDown();
-                }
-
-                @Override
-                public void onResponse(String response) {
-                    //因为多个线程会操作共享数据cdl或其它的，所以需要对这里代码进行synchronized同步一下
-                    cdl.countDown();
-                    //解析和保存数据到uploadSuccPhotos
-//                    uploadSuccPhotos.add()
-                }
-            });
-        }
+    public void parseUploadImgResponse(String response){
+        //{"code":0,"errMsg":"upload success","data":{"url":"http:\/\/192.168.1.253\/upload\/20160314\/1457936466ecztau.png"}}
         try {
-            cdl.await();
-        } catch (InterruptedException e) {
-            //若出现异常，不管，程序继续往下走
+            JSONObject jsonObj = new JSONObject(response) ;
+            int code = jsonObj.getInt("code") ;
+            if (code == 0){
+                JSONObject dataJO = jsonObj.getJSONObject("data") ;
+                String imgUrl = dataJO.getString("url") ;
+                upLoadSucPhotos.add(imgUrl) ;
+            }
+        } catch (JSONException e) {
+            //不处理
             e.printStackTrace();
-            Log.i("jiaoyiquan","====EditActivity===   CountDownLatch："+e.getMessage()) ;
         }
     }
-
-
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -146,8 +244,6 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             photoAdapter.notifyDataSetChanged();
         }
     }
-
-
 
     /*
     //检查权限
